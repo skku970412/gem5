@@ -1,6 +1,6 @@
 # Manual GitHub updates
 
-Last refreshed: 2026-07-08 10:49 UTC
+Last refreshed: 2026-07-08 11:40 UTC
 
 Use this when `gh` is unavailable or unauthenticated. Current environment
 state:
@@ -62,13 +62,14 @@ Action:
 Do not:
 
 - Do not add CHI/macOS fix details to #3291 beyond a brief note if asked.
-- Do not claim the default `ALL` build passed on commit `6e24b3b44a`.
+- Do not claim the default `ALL` build passed on commit `240b6f0961`.
 - Do not reopen/reset review threads unnecessarily.
 
 Current local verification to mention:
 
 ```sh
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
+python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
   tests/pyunit/stats/stats_txt.py \
   tests/pyunit/stats/pyunit_stats_txt.py \

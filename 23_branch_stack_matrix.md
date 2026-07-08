@@ -1,6 +1,6 @@
 # gem5 branch stack matrix
 
-Last refreshed: 2026-07-08 07:27 UTC
+Last refreshed: 2026-07-08 11:40 UTC
 
 ## Stats reliability stack
 
@@ -16,9 +16,9 @@ develop
 Current commits:
 
 ```text
-stats-txt-parser-pyunit:     6e24b3b44a tests: preserve integer stats parser values
-stats-reset-validator:       595c27591b tests: add stats reset validation
-stats-reset-validation-docs: 2485caabe5 tests: document stats reset validation
+stats-txt-parser-pyunit:     240b6f0961 tests: cover stats parser malformed boundaries
+stats-reset-validator:       33d79e2c2e tests: add stats reset validation
+stats-reset-validation-docs: d176af0239 tests: document stats reset validation
 ```
 
 Ancestor checks:
@@ -29,7 +29,7 @@ Ancestor checks:
 Stack counts:
 
 ```text
-origin/develop...stats-txt-parser-pyunit:                 2 5
+origin/develop...stats-txt-parser-pyunit:                 2 6
 stats-txt-parser-pyunit...stats-reset-validator:       0 1
 stats-reset-validator...stats-reset-validation-docs:   0 1
 ```

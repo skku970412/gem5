@@ -1,6 +1,6 @@
 # PR 2 pre-PR gate: stats reset validator
 
-Date checked: 2026-07-08 07:27 UTC
+Date checked: 2026-07-08 11:40 UTC
 
 Branch: `stats-reset-validator`
 
@@ -24,13 +24,13 @@ READY as a stacked follow-up branch.
 The branch was rebased on 2026-07-08 onto the latest #3291 parser commit:
 
 ```text
-6e24b3b44a tests: preserve integer stats parser values
+240b6f0961 tests: cover stats parser malformed boundaries
 ```
 
 Current PR2 candidate commit:
 
 ```text
-595c27591b tests: add stats reset validation
+33d79e2c2e tests: add stats reset validation
 ```
 
 The PR2-only diff against `stats-txt-parser-pyunit` is narrow:
@@ -73,7 +73,7 @@ Result: passed.
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
 ```
 
-Result: passed, 10 tests.
+Result: passed, 12 tests.
 
 ```sh
 cd tests && ./main.py list -q --suites | grep -i stats
@@ -92,7 +92,7 @@ The reset validator targets `NULL` because the config uses only
 ./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats
 ```
 
-Result: passed, 10 tests.
+Result: passed, 12 tests.
 
 ```sh
 cd tests && ./main.py run --skip-build --uid SuiteUID:tests/gem5/stats/test_stats_reset.py:stats-reset-check-NULL-x86_64-opt

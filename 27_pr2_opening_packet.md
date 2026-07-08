@@ -27,9 +27,9 @@ develop
 Current commits:
 
 ```text
-stats-txt-parser-pyunit:     6e24b3b44a tests: preserve integer stats parser values
-stats-reset-validator:       595c27591b tests: add stats reset validation
-stats-reset-validation-docs: 2485caabe5 tests: document stats reset validation
+stats-txt-parser-pyunit:     240b6f0961 tests: cover stats parser malformed boundaries
+stats-reset-validator:       33d79e2c2e tests: add stats reset validation
+stats-reset-validation-docs: d176af0239 tests: document stats reset validation
 ```
 
 Current stack checks:
@@ -63,7 +63,7 @@ Files:
 
 ## Latest Verification
 
-Passed on 2026-07-08 after rebasing onto #3291 commit `6e24b3b44a`:
+Passed on 2026-07-08 after rebasing onto #3291 commit `240b6f0961`:
 
 ```sh
 git diff --check stats-txt-parser-pyunit...HEAD
@@ -79,7 +79,7 @@ PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
 ```
 
-Result: parser pyunit passed 10 tests.
+Result: parser pyunit passed 12 tests.
 
 ```sh
 cd tests && ./main.py list -q --suites | grep -i stats
@@ -104,7 +104,7 @@ cd tests && ./main.py run --skip-build --uid SuiteUID:tests/gem5/stats/test_stat
 
 Results:
 
-- pyunit passed 10 tests under `build/NULL/gem5.opt`.
+- pyunit passed 12 tests under `build/NULL/gem5.opt`.
 - reset suite passed twice, 2 tests per run.
 
 Default `ALL` build note:

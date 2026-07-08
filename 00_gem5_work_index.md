@@ -1,6 +1,6 @@
 # gem5 work index
 
-Last refreshed: 2026-07-08 10:49:00 UTC
+Last refreshed: 2026-07-08 11:40:00 UTC
 
 Start here when resuming this gem5 contribution work.
 
@@ -100,8 +100,10 @@ Read first:
 
 Latest confirmed state:
 
-- #3291 code branch is current at `6e24b3b44a` in the fork.
+- #3291 code branch is current at `240b6f0961` in the fork.
 - Erin/Copilot review comments on #3291 are addressed in code.
+- Additional malformed-boundary parser tests were added after rechecking the
+  current raw/local files.
 - No approving maintainer review is visible yet.
 - The GitHub #3291 body is still stale and should be replaced with
   `03_pr1_body.md` from the browser or via `43_apply_github_pr_updates.sh`

@@ -7,7 +7,8 @@ Summary:
 - Preserve stat names as emitted, including names with `::`, brackets,
   hyphens, dots, and digits.
 - Add fixture-based pyunit coverage for scalar stats, multi-dump files, edge
-  numeric values, malformed input, duplicate names, and empty/no-dump files.
+  numeric values, malformed input, malformed dump boundaries, duplicate names,
+  and empty/no-dump files.
 
 Motivation:
 - This is a non-invasive first step toward #1644.
@@ -30,15 +31,22 @@ Implementation:
   output.
 
 Testing:
+- [x] `python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py`
+  passed.
 - [x] `python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v`
-  passed, 10 tests.
+  passed, 12 tests.
+- [x] `python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v`
+  passed, 12 tests.
 - [x] `PATH="$HOME/.local/bin:$PATH" pre-commit run --files tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py tests/pyunit/stats/fixtures/edge_values.txt`
   passed.
+- [x] Hidden/control character scan passed for source and fixture files under
+  `tests/pyunit/stats`.
 - [x] `git diff --check origin/develop...HEAD` passed.
 - [x] `git diff --check` passed.
-- [x] `pre-commit.ci - pr` passed on commit `6e24b3b44a`.
+- [x] `pre-commit.ci - pr` passed on commit `6e24b3b44a`; awaiting rerun on
+  latest commit `240b6f0961`.
 - [x] `./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats`
-  passed, 10 tests.
+  passed, 12 tests.
 - [ ] `scons build/ALL/gem5.opt -j4` could not be completed in the current
   container. The default `ALL` build failed at link with protobuf/absl
   undefined references due a local protobuf/protoc/header/library mismatch

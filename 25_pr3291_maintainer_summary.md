@@ -1,6 +1,6 @@
 # PR #3291 maintainer summary
 
-Last refreshed: 2026-07-08 10:49 UTC
+Last refreshed: 2026-07-08 11:40 UTC
 
 PR: https://github.com/gem5/gem5/pull/3291
 
@@ -14,7 +14,7 @@ change simulator behavior, stats output format, or system-level test behavior.
 Latest pushed commit:
 
 ```text
-6e24b3b44a tests: preserve integer stats parser values
+240b6f0961 tests: cover stats parser malformed boundaries
 ```
 
 Current diff against `origin/develop`:
@@ -36,8 +36,8 @@ Files changed:
 - `tests/pyunit/stats/pyunit_stats_txt.py`
 - `tests/pyunit/stats/stats_txt.py`
 
-The branch is currently `2 5` against `origin/develop`: two upstream commits
-behind and five parser PR commits ahead. Do not rebase just for this unless
+The branch is currently `2 6` against `origin/develop`: two upstream commits
+behind and six parser PR commits ahead. Do not rebase just for this unless
 maintainers request it or CI/review clearly needs it, because a force-push can
 restart review/check state.
 
@@ -88,13 +88,25 @@ stacked PR.
 
 ## Current verification summary
 
-Passed on 2026-07-08 for commit `6e24b3b44a`:
+Passed on 2026-07-08 for commit `240b6f0961`:
+
+```sh
+python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py
+```
+
+Result: passed.
 
 ```sh
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
 ```
 
-Result: 10 tests passed.
+Result: 12 tests passed.
+
+```sh
+python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v
+```
+
+Result: 12 tests passed.
 
 ```sh
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
@@ -105,6 +117,9 @@ PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
 
 Result: passed.
 
+Hidden/control character scan for tracked source and fixture files under
+`tests/pyunit/stats`: passed.
+
 ```sh
 git diff --check origin/develop...HEAD
 git diff --check
@@ -114,7 +129,8 @@ Result: passed.
 
 Remote:
 
-- `pre-commit.ci - pr` passed on `6e24b3b44a`.
+- `pre-commit.ci - pr` passed on `6e24b3b44a`; awaiting rerun on
+  `240b6f0961`.
 
 Passed in the current environment:
 
@@ -122,7 +138,7 @@ Passed in the current environment:
 ./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats
 ```
 
-Result: passed, 10 tests.
+Result: passed, 12 tests.
 
 Default `ALL` build note:
 
@@ -161,5 +177,7 @@ values remain floats, and the new file copyright holder is
 `Sungkyunkwan University`.
 
 It does not change simulator behavior or the stats output format. The follow-up
-reset validator for #1644 is prepared separately so this PR stays small.
+reset validator for #1644 is prepared separately so this PR stays small. A
+follow-up commit `240b6f0961` adds two small malformed-boundary tests and keeps
+the delimiter spelling aligned with `src/base/stats/text.cc`.
 ```

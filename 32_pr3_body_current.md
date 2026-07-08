@@ -16,11 +16,11 @@ Testing:
 Current stacked-branch maintenance recheck:
 
 - 2026-07-08 07:27 UTC: rebased `stats-reset-validation-docs` onto the latest
-  `stats-reset-validator` commit `595c27591b`.
+  `stats-reset-validator` commit `33d79e2c2e`.
 - 2026-07-08 07:27 UTC: PR3-only stack is now `0 1` against
   `stats-reset-validator`.
 - 2026-07-08 07:27 UTC: current PR3 candidate commit is
-  `2485caabe5 tests: document stats reset validation`.
+  `d176af0239 tests: document stats reset validation`.
 - 2026-07-08 07:27 UTC:
   `git diff --check stats-reset-validator...stats-reset-validation-docs`
   passed.

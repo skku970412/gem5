@@ -30,9 +30,9 @@ develop
 Current commits:
 
 ```text
-stats-txt-parser-pyunit:     6e24b3b44a tests: preserve integer stats parser values
-stats-reset-validator:       595c27591b tests: add stats reset validation
-stats-reset-validation-docs: 2485caabe5 tests: document stats reset validation
+stats-txt-parser-pyunit:     240b6f0961 tests: cover stats parser malformed boundaries
+stats-reset-validator:       33d79e2c2e tests: add stats reset validation
+stats-reset-validation-docs: d176af0239 tests: document stats reset validation
 ```
 
 Current stack checks:
@@ -64,7 +64,7 @@ File:
 
 ## Latest Verification
 
-Passed on 2026-07-08 after rebasing onto PR2 commit `595c27591b`:
+Passed on 2026-07-08 after rebasing onto PR2 commit `33d79e2c2e`:
 
 ```sh
 git diff --check stats-reset-validator...stats-reset-validation-docs

@@ -1,13 +1,14 @@
 # gem5 contribution dashboard
 
-Last updated: 2026-07-08 10:49 UTC
+Last updated: 2026-07-08 11:40 UTC
 
 This is the single-page status report for continuing the gem5 contribution
 work. Use this first, then open the detailed files linked from each section.
 
 ## Current priority
 
-1. PR #3291 review comments have been addressed and pushed at `6e24b3b44a`.
+1. PR #3291 review comments have been addressed and pushed at `6e24b3b44a`;
+   parser-boundary coverage was added at `240b6f0961`.
 2. Remote #3291 body still describes the old float-only parser behavior and
    still claims the older `ALL/gem5.opt` validation. Replace it with
    `03_pr1_body.md`.
@@ -16,7 +17,7 @@ work. Use this first, then open the detailed files linked from each section.
    browser or rerun `43_apply_github_pr_updates.sh` after exporting a token.
 4. Remote #3292 title/body still describe the old directory-rename approach.
 5. Monitor #3291/#3292 review and CI after the metadata updates.
-6. Do not rebase #3291 solely because `origin/develop` is now `2 5` against
+6. Do not rebase #3291 solely because `origin/develop` is now `2 6` against
    the parser branch; avoid force-pushing reviewed PRs unless required.
 
 ## Identity / repo
@@ -33,7 +34,7 @@ work. Use this first, then open the detailed files linked from each section.
 
 | PR | Branch | Purpose | Current status | Next action |
 | --- | --- | --- | --- | --- |
-| #3291 | `stats-txt-parser-pyunit` | stats.txt multi-dump parser tests | Open; review comments addressed at `6e24b3b44a`; pre-commit.ci passed; remote PR body is stale. | Update PR body from `03_pr1_body.md`, optionally post `41_pr3291_review_response.md`, then monitor. |
+| #3291 | `stats-txt-parser-pyunit` | stats.txt multi-dump parser tests | Open; review comments addressed at `6e24b3b44a`; latest head `240b6f0961`; remote PR body is stale. | Update PR body from `03_pr1_body.md`, optionally post `41_pr3291_review_response.md`, then monitor. |
 | #3292 | `fix-chi-protocol-case` | CHI include/path case fix for macOS CI | Open; smaller no-directory-rename fix pushed at `1f32ed40c3`; remote title/body are stale. | Update title/body from `13_chi_macos_case_pr_body.md`, post maintainer response, then monitor. |
 | #3293 | `stats-name-canonicalizer` | draft optional stats name canonicalizer for #2744 | Draft; no maintainer direction yet. | Keep draft. Do not expand until feedback. |
 | #3241 | `review-pr-3241` local only | review/test support for another contributor's stats lookup PR | Comment/test-gap support only. Do not take over. | Wait unless maintainers ask for help. |
@@ -88,7 +89,8 @@ closing it and keeping #3291 scoped to parser work.
 ### PR #3291
 
 - Review comments were added on 2026-07-08 and addressed in
-  `6e24b3b44a`.
+  `6e24b3b44a`; additional parser-boundary tests were added in
+  `240b6f0961`.
 - Parser PR should stay parser-only.
 - Do not mix CHI CI fixes into #3291.
 - Remote PR body still needs a manual update: it currently says values are
@@ -126,6 +128,9 @@ Latest review response pushed on 2026-07-08:
 - Added fixture coverage for `18446744073709551615`.
 - Updated new parser/test file copyright holder to
   `Sungkyunkwan University`.
+- Follow-up commit: `240b6f0961 tests: cover stats parser malformed boundaries`
+  adds missing-value and nested-begin delimiter tests, plus an explicit
+  `simTicks` integer-type assertion.
 
 Detailed files:
 
@@ -146,18 +151,18 @@ Prepared but should not open until #3291 merges:
 Latest stack maintenance on 2026-07-08:
 
 - Rebased `stats-reset-validator` onto current #3291 commit
-  `6e24b3b44a`.
+  `240b6f0961`.
 - Rebased `stats-reset-validation-docs` onto the updated PR2 branch.
 - Changed PR2 to the smaller `NULL` target because the reset config uses only
   `ScalarStatTester` and no ISA-specific setup.
 - Current PR2 commit:
-  `595c27591b tests: add stats reset validation`.
+  `33d79e2c2e tests: add stats reset validation`.
 - Current PR3 commit:
-  `2485caabe5 tests: document stats reset validation`.
+  `d176af0239 tests: document stats reset validation`.
 - Stack counts are clean:
   `stats-txt-parser-pyunit...stats-reset-validator = 0 1` and
   `stats-reset-validator...stats-reset-validation-docs = 0 1`.
-- #3291 is now `2 5` against `origin/develop` after upstream develop advanced
+- #3291 is now `2 6` against `origin/develop` after upstream develop advanced
   to `a61fe05b14`; no rebase was performed.
 - Force-pushed both candidate branches to the fork with
   `git push --force-with-lease fork stats-reset-validator stats-reset-validation-docs`.
@@ -237,11 +242,15 @@ Both fork and PR ref point to `1f32ed40c3`.
 Public GitHub check-run API returned no visible check runs for `1f32ed40c3`
 immediately after the force-push.
 
-For #3291 commit `6e24b3b44a`, the following passed locally:
+For #3291 commit `240b6f0961`, the following passed locally:
 
 ```sh
+python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
+python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v
 ```
+
+Both unittest invocations passed 12 tests.
 
 ```sh
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
@@ -250,10 +259,19 @@ PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
   tests/pyunit/stats/fixtures/edge_values.txt
 ```
 
+Hidden/control character scan for tracked source and fixture files under
+`tests/pyunit/stats`: passed.
+
 ```sh
 git diff --check origin/develop...HEAD
 git diff --check
 ```
+
+```sh
+./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats
+```
+
+Result: passed, 12 tests.
 
 `./build/ALL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats`
 could not be completed with the default local build because

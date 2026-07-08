@@ -49,15 +49,15 @@ the `skku970412/gem5` fork, not an upstream gem5 PR branch.
 ## Current Code Branches
 
 - `stats-txt-parser-pyunit`: #3291, current head
-  `6e24b3b44a tests: preserve integer stats parser values`
+  `240b6f0961 tests: cover stats parser malformed boundaries`
 - `fix-chi-protocol-case`: #3292, current head
   `1f32ed40c3 mem-ruby: avoid CHI generated include case mismatch`
 - `stats-name-canonicalizer`: #3293 draft, current head
   `d2e5d52abd util: add experimental stats name canonicalizer`
 - `stats-reset-validator`: PR2 candidate, current head
-  `595c27591b tests: add stats reset validation`
+  `33d79e2c2e tests: add stats reset validation`
 - `stats-reset-validation-docs`: PR3 candidate, current head
-  `2485caabe5 tests: document stats reset validation`
+  `d176af0239 tests: document stats reset validation`
 
 ## Commands
 
@@ -89,7 +89,9 @@ Run #3291 parser tests:
 
 ```sh
 cd /home/work/llama_young/for____what/gem5
+python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
+python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
   tests/pyunit/stats/stats_txt.py \
   tests/pyunit/stats/pyunit_stats_txt.py \

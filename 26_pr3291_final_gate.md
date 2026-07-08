@@ -4,7 +4,7 @@ PR: https://github.com/gem5/gem5/pull/3291
 
 Issue: https://github.com/gem5/gem5/issues/1644
 
-Last refreshed: 2026-07-08 07:45 UTC
+Last refreshed: 2026-07-08 11:40 UTC
 
 ## Verdict
 
@@ -13,6 +13,7 @@ on GitHub:
 
 - The branch contains one logical parser-only change.
 - Latest review comments have been addressed in `6e24b3b44a`.
+- Additional parser-boundary tests have been pushed in `240b6f0961`.
 - Local targeted parser verification passed.
 - Remote PR body is stale and should be updated from `03_pr1_body.md` when
   GitHub auth/browser access is available.
@@ -47,15 +48,17 @@ or unrelated formatting changes are included.
 Latest commit:
 
 ```text
-6e24b3b44a tests: preserve integer stats parser values
+240b6f0961 tests: cover stats parser malformed boundaries
 ```
 
-Fixed:
+Covered/fixed:
 
 - Integer-looking values now parse as `int`.
 - Decimal/scientific/`nan`/`inf` values still parse as `float`.
 - Fixture coverage now includes `18446744073709551615`.
 - New Python file copyright holder is `Sungkyunkwan University`.
+- Malformed boundary coverage now includes a missing value and a begin
+  delimiter before the previous dump ended.
 
 ## Local gate evidence
 
@@ -68,19 +71,31 @@ git rev-list --left-right --count origin/develop...HEAD
 Result:
 
 ```text
-1 5
+2 6
 ```
 
-Interpretation: one upstream commit behind, five PR commits ahead. Do not
+Interpretation: two upstream commits behind, six PR commits ahead. Do not
 force-push solely for this unless maintainers request it.
 
 Verification commands from the latest parser gate:
 
 ```sh
+python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py
+```
+
+Result: passed.
+
+```sh
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
 ```
 
-Result: passed, 10 tests.
+Result: passed, 12 tests.
+
+```sh
+python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v
+```
+
+Result: passed, 12 tests.
 
 ```sh
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
@@ -91,6 +106,9 @@ PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
 
 Result: passed.
 
+Hidden/control character scan for tracked source and fixture files under
+`tests/pyunit/stats`: passed.
+
 ```sh
 git diff --check origin/develop...HEAD
 git diff --check
@@ -100,13 +118,14 @@ Result: passed.
 
 Remote check observed:
 
-- `pre-commit.ci - pr` passed on `6e24b3b44a`.
+- `pre-commit.ci - pr` passed on `6e24b3b44a`; awaiting rerun on
+  `240b6f0961`.
 
 ```sh
 ./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats
 ```
 
-Result: passed, 10 tests.
+Result: passed, 12 tests.
 
 ## Local `ALL` Build Note
 

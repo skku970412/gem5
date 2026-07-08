@@ -1,6 +1,6 @@
 # Current waiting state
 
-Last refreshed: 2026-07-08 10:49:00 UTC
+Last refreshed: 2026-07-08 11:40:00 UTC
 
 Top-level index: `00_gem5_work_index.md`
 
@@ -12,10 +12,13 @@ This is the concise status snapshot for deciding what to do next.
 
 - #3291 parser PR:
   review comments were addressed and pushed as
-  `6e24b3b44a tests: preserve integer stats parser values`.
-  `pre-commit.ci - pr` passed on that commit. The public PR page still shows
-  no approving maintainer review and still lists BobbyRBruce as awaiting
-  review. The remote PR body is stale and should be updated from
+  `6e24b3b44a tests: preserve integer stats parser values`; a follow-up
+  coverage commit `240b6f0961 tests: cover stats parser malformed boundaries`
+  was pushed after rechecking raw/local files and hidden/control characters.
+  `pre-commit.ci - pr` passed on `6e24b3b44a`; wait for rerun on
+  `240b6f0961`. The public PR page still shows no approving maintainer review
+  and still lists BobbyRBruce as awaiting review. The remote PR body is stale
+  and should be updated from
   `03_pr1_body.md` when GitHub auth/browser access is available.
 - #3292 CHI case-fix PR:
   maintainer objected to the original directory rename. A smaller
@@ -32,7 +35,7 @@ This is the concise status snapshot for deciding what to do next.
   review/test help.
 - Local PR2/PR3 stack:
   rebased on 2026-07-08 so `stats-reset-validator` now sits on latest #3291
-  commit `6e24b3b44a`, and `stats-reset-validation-docs` sits on the updated
+  commit `240b6f0961`, and `stats-reset-validation-docs` sits on the updated
   PR2 branch. PR2 now uses the smaller `NULL` target. Fork branches were
   force-with-lease updated.
 
@@ -47,16 +50,16 @@ stats-txt-parser-pyunit
 Current important heads:
 
 ```text
-#3291 / stats-txt-parser-pyunit: 6e24b3b44a
+#3291 / stats-txt-parser-pyunit: 240b6f0961
 #3292 / fix-chi-protocol-case: 1f32ed40c3
-PR2 / stats-reset-validator: 595c27591b
-PR3 / stats-reset-validation-docs: 2485caabe5
+PR2 / stats-reset-validator: 33d79e2c2e
+PR3 / stats-reset-validation-docs: d176af0239
 ```
 
 Current PR2/PR3 stack counts:
 
 ```text
-origin/develop...stats-txt-parser-pyunit: 2 5
+origin/develop...stats-txt-parser-pyunit: 2 6
 stats-txt-parser-pyunit...stats-reset-validator: 0 1
 stats-reset-validator...stats-reset-validation-docs: 0 1
 ```
@@ -87,7 +90,7 @@ For #3291 review response:
 python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v
 ```
 
-Passed 10 tests.
+Passed 12 tests.
 
 ```sh
 PATH="$HOME/.local/bin:$PATH" pre-commit run --files \
@@ -150,8 +153,8 @@ Passed where applicable. The reset suite passed twice on
 and left branches unchanged. Remote fork heads now point to:
 
 ```text
-stats-reset-validator: 595c27591b
-stats-reset-validation-docs: 2485caabe5
+stats-reset-validator: 33d79e2c2e
+stats-reset-validation-docs: d176af0239
 ```
 
 ## Ready But Not Opened
@@ -173,7 +176,7 @@ stats-reset-validation-docs: 2485caabe5
 
 ## Next Useful Action
 
-1. Monitor #3291 CI/review on `6e24b3b44a`.
+1. Monitor #3291 CI/review on `240b6f0961`.
 2. If browser/GitHub auth is available, update #3291 body from
    `03_pr1_body.md` and optionally post the #3291 review response from
    `41_pr3291_review_response.md`.

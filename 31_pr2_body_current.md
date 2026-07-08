@@ -36,14 +36,14 @@ Testing:
 Current stacked-branch maintenance recheck:
 
 - 2026-07-08 07:27 UTC: rebased `stats-reset-validator` onto the latest
-  #3291 parser branch commit `6e24b3b44a`.
+  #3291 parser branch commit `240b6f0961`.
 - 2026-07-08 07:27 UTC: changed the reset validator to the smaller
   `NULL` target because the config uses only `ScalarStatTester` and has no
   ISA-specific setup.
 - 2026-07-08 07:27 UTC: PR2-only stack is now `0 1` against
   `stats-txt-parser-pyunit`.
 - 2026-07-08 07:27 UTC: current PR2 candidate commit is
-  `595c27591b tests: add stats reset validation`.
+  `33d79e2c2e tests: add stats reset validation`.
 - 2026-07-08 07:27 UTC: `git diff --check stats-txt-parser-pyunit...HEAD`
   passed.
 - 2026-07-08 07:27 UTC:
@@ -51,10 +51,10 @@ Current stacked-branch maintenance recheck:
   passed.
 - 2026-07-08 07:27 UTC:
   `python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v`
-  passed, 10 tests.
+  passed, 12 tests.
 - 2026-07-08 07:27 UTC:
   `./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats`
-  passed, 10 tests.
+  passed, 12 tests.
 - 2026-07-08 07:27 UTC:
   `cd tests && ./main.py list -q --suites | grep -i stats-reset` listed
   `SuiteUID:tests/gem5/stats/test_stats_reset.py:stats-reset-check-NULL-x86_64-opt`.

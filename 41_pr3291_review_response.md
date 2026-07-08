@@ -2,7 +2,10 @@
 
 PR: https://github.com/gem5/gem5/pull/3291
 
-Latest response commit: `6e24b3b44a tests: preserve integer stats parser values`
+Latest response commits:
+
+- `6e24b3b44a tests: preserve integer stats parser values`
+- `240b6f0961 tests: cover stats parser malformed boundaries`
 
 Last refreshed: 2026-07-08 10:49 UTC
 
@@ -21,9 +24,17 @@ Thanks for the review comments. I pushed `6e24b3b44a` addressing them:
 - the copyright holder in the new parser/test Python files is updated to
   `Sungkyunkwan University`.
 
+I also pushed `240b6f0961` with two extra malformed-boundary tests and an
+explicit `simTicks` integer-type assertion. I rechecked the current raw files
+and local files: the tracked source/fixture files are UTF-8/ASCII LF text, with
+no hidden/control characters found by the scan below.
+
 Local checks:
+- `python3 -m py_compile tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py`
 - `python3 -m unittest discover -s tests/pyunit/stats -p 'pyunit*.py' -v`
+- `python3 -m unittest discover -s tests/pyunit -p 'pyunit_stats_txt.py' -v`
 - `pre-commit run --files tests/pyunit/stats/stats_txt.py tests/pyunit/stats/pyunit_stats_txt.py tests/pyunit/stats/fixtures/edge_values.txt`
+- hidden/control character scan for tracked source/fixture files under `tests/pyunit/stats`
 - `git diff --check origin/develop...HEAD`
 - `git diff --check`
 - `./build/NULL/gem5.opt tests/run_pyunit.py --directory tests/pyunit/stats`
@@ -50,4 +61,18 @@ floats.
 ```markdown
 Updated both new Python files to use `Sungkyunkwan University` as the copyright
 holder in `6e24b3b44a`.
+```
+
+## Additional parser-boundary coverage comment
+
+```markdown
+I added `240b6f0961` with two small parser-boundary tests:
+
+- a stat line with a missing value now raises a clear `StatsParseError`;
+- a second begin delimiter before the previous dump ended also raises a clear
+  `StatsParseError`.
+
+I kept the end delimiter spelling as
+`---------- End Simulation Statistics   ----------` because that is what
+`src/base/stats/text.cc` emits today.
 ```
